@@ -1,0 +1,44 @@
+.form-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  color: #ffffff; /* Light text color for dark mode */
+}
+
+.form-check-input {
+  width: 50px;
+  height: 25px;
+  background-color: #333; /* Dark background */
+  border: 1px solid #444;
+  border-radius: 25px;
+  appearance: none;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+.form-check-input:checked {
+  background-color: #007BFF; /* Blue when checked */
+}
+
+.form-check-input::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 21px;
+  height: 21px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+.form-check-input:checked::before {
+  transform: translateX(25px);
+}
+
+.form-check-label {
+  margin-left: 10px;
+  font-size: 16px;
+}
