@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
-import { useGetCovidCasesQuery } from "./covidApiSlice"; // Import hook từ RTK Query
+import { useGetCovidCasesQuery } from "../redux/slices/covid.slice"; // Import hook từ RTK Query
 
 function Map({ selectedFilter, selectedDate, selectedColor }) {
   const [map, setMap] = useState(null);

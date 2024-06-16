@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { createGeoJSONFromCovidCases } from "./utils";
+import { createGeoJSONFromCovidCases } from "../../util";
 
 export const covidApi = createApi({
   reducerPath: "covidApi",
