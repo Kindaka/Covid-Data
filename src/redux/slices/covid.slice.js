@@ -10,12 +10,11 @@ export const covidApi = createApi({
         url: "CovidDailies",
         params: {
           $expand: "CountryRegion",
-          $filter: `day eq ${selectedDate ? selectedDate : "2021-01-03"}}`,
+          $filter: `day eq ${selectedDate ? selectedDate : "2021-01-03"}`,
           $select: selectedFilter,
         },
-        transformResponse: (response) =>
-          createGeoJSONFromCovidCases(response.value),
-      }),
+       
+      })
     }),
   }),
   keepUnusedDataFor: 3600,

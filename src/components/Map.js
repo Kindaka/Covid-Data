@@ -2,16 +2,27 @@ import React, { useState, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { useGetCovidCasesQuery } from "../redux/slices/covid.slice"; // Import hook từ RTK Query
+import { createGeoJSONFromCovidCases } from '../util';
 
-function Map({ selectedFilter, selectedDate, selectedColor }) {
+
+function Map({setCovidCases, selectedFilter, selectedDate, selectedColor,setIsLoading }) {
   const [map, setMap] = useState(null);
   const [zoom, setZoom] = useState(6);
 
   // Sử dụng hook useGetCovidCasesQuery để lấy dữ liệu
-  const { data: covidCases, isLoading } = useGetCovidCasesQuery({
+  const { data: covidCases, isLoading,isSuccess } = useGetCovidCasesQuery({
     selectedFilter,
     selectedDate,
   });
+
+  useEffect(()=>{
+    setCovidCases(covidCases&&covidCases?.value?covidCases.value:undefined)
+    
+  },[isSuccess])
+
+  useEffect(()=>{
+    setIsLoading(isLoading)
+  },[isLoading])
 
   useEffect(() => {
     if (!covidCases || isLoading) return; // Đợi cho đến khi có dữ liệu
@@ -26,11 +37,13 @@ function Map({ selectedFilter, selectedDate, selectedColor }) {
     });
     setMap(mapInstance);
 
+    const geojsonData = createGeoJSONFromCovidCases(covidCases.value);
+
     // Thêm dữ liệu GeoJSON vào bản đồ
     mapInstance.on("load", () => {
       mapInstance.addSource("covid-data", {
         type: "geojson",
-        data: covidCases,
+        data: geojsonData,
       });
       mapInstance.addLayer({
         id: "covid-cases",
@@ -84,7 +97,7 @@ function Map({ selectedFilter, selectedDate, selectedColor }) {
     };
   }, [covidCases, isLoading, selectedColor, selectedFilter]);
 
-  console.log(zoom);
+  console.log("data covid",covidCases&&covidCases?.value?covidCases.value:undefined);
 
   return <div id="map" style={{ width: "100%", height: "800px" }}></div>;
 }

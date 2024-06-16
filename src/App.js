@@ -7,30 +7,16 @@ import Loading from "./components/Loading/Loading";
 import { getCovidCases } from "./api";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import { useGetCovidCasesQuery } from "./redux/slices/covid.slice";
 
 function App() {
   const [showMap, setShowMap] = useState(false); // Default to false (show Map initially)
-  const [covidCases, setCovidCases] = useState([]);
+ const [covidCases,setCovidCases]=useState([])
   const [selectedFilter, setSelectedFilter] = useState("personConfirmed");
   const [selectedColor, setSelectedColor] = useState("personConfirmedColor");
   const [selectedDate, setSelectedDate] = useState("2021-01-03");
+  const [isLoading,setIsLoading]=useState(true)
 
-  const [isLoading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const data = await getCovidCases(selectedFilter, selectedDate);
-        setCovidCases(data.value);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setLoading(false);
-      }
-    };
-    fetchData();
-  }, [selectedFilter, selectedDate]);
 
   const handleDateChange = (event) => {
     setSelectedDate(event.target.value);
@@ -49,15 +35,16 @@ function App() {
           />
           {!showMap ? (
             <Map
-              covidCases={covidCases}
+            setCovidCases={setCovidCases}
               selectedFilter={selectedFilter}
               selectedColor={selectedColor}
+              setIsLoading={setIsLoading}
             />
           ) : (
             <TreeMap covidCases={covidCases} selectedFilter={selectedFilter} />
           )}
           <FilterButtons
-            setCovidCases={setCovidCases}
+          
             selectedFilter={selectedFilter}
             setSelectedFilter={setSelectedFilter}
             setSelectedColor={setSelectedColor}
