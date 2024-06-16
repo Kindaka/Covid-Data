@@ -8,17 +8,7 @@ function FilterButtons({ setCovidCases, selectedFilter, setSelectedFilter, setSe
         setSelectedColor(filter.concat("Color"));
     };
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const data = await getCovidCases(selectedFilter, selectedDate); // Thêm selectedDate
-            setCovidCases(data.value);
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-        fetchData();
-    }, [selectedFilter, selectedDate]); // Thêm selectedDate vào dependency array
+   
 
     return (
         <div className="data-filter">

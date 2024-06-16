@@ -4,10 +4,9 @@ import { TreeMap } from "./components/TreeMap";
 import FilterButtons from "./components/FilterButtons/FilterButtons";
 import CheckBtn from "./components/CheckBtn/CheckBtn";
 import Loading from "./components/Loading/Loading";
-import { getCovidCases } from "./api";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import { useGetCovidCasesQuery } from "./redux/slices/covid.slice";
+
 
 function App() {
   const [showMap, setShowMap] = useState(false); // Default to false (show Map initially)
@@ -35,9 +34,10 @@ function App() {
           />
           {!showMap ? (
             <Map
-            setCovidCases={setCovidCases}
+              setCovidCases={setCovidCases}
               selectedFilter={selectedFilter}
               selectedColor={selectedColor}
+              selectedDate={selectedDate}
               setIsLoading={setIsLoading}
             />
           ) : (

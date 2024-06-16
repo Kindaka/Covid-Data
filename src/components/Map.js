@@ -17,6 +17,7 @@ function Map({setCovidCases, selectedFilter, selectedDate, selectedColor,setIsLo
 
   useEffect(()=>{
     setCovidCases(covidCases&&covidCases?.value?covidCases.value:undefined)
+    setIsLoading(false)
     
   },[isSuccess])
 
@@ -97,8 +98,7 @@ function Map({setCovidCases, selectedFilter, selectedDate, selectedColor,setIsLo
     };
   }, [covidCases, isLoading, selectedColor, selectedFilter]);
 
-  console.log("data covid",covidCases&&covidCases?.value?covidCases.value:undefined);
-
+  console.log('day change',selectedDate)
   return <div id="map" style={{ width: "100%", height: "800px" }}></div>;
 }
 
